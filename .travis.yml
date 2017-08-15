@@ -8,9 +8,9 @@ compiler:
 env:
   - PY=2
 
-#cache:
-#  directories:
-#  - $HOME/an
+cache:
+  directories:
+  - $HOME/an
 
 script:
     - which python
