@@ -8,9 +8,9 @@ compiler:
 env:
   - PY=2
 
-cache:
-  directories:
-  - $HOME/an
+#cache:
+#  directories:
+#  - $HOME/an
 
 script:
     - which python
@@ -30,6 +30,8 @@ script:
     - pip install fitsio --user
     - export WCSLIB_INC="-I/usr/include/wcslib-4.20"
     - export WCSLIB_LIB="-lwcs"
+    - git clone --depth=10 --branch=master https://github.com/dstndstn/astrometry.net.git
+    - cd astrometry.net
     - make
     - make py
     - make extra
