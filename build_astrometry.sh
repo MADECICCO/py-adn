@@ -36,6 +36,7 @@ make install INSTALL_DIR=~/an
 export PATH=${PATH}:~/an/bin
 build-astrometry-index -d 3 -o index-9918.fits -P 18 -S mag -B 0.1 -s 0 -r 1 -I 9918 -M -i demo/tycho2-mag6.fits
 echo -e 'add_path .\ninparallel\nindex index-9918.fits' > 99.cfg
+wget http://broiler.astrometry.net/~dstn/4100/index-4115.fits ~/an/data
 solve-field --config 99.cfg demo/apod4.jpg  --continue
 tablist demo/apod4.match
 listhead demo/apod4.wcs
