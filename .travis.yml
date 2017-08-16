@@ -35,6 +35,8 @@ install:
   - export PYTHONPATH=${PYTHONPATH}:~/an/lib/python
   - which solve-field
   - which wcsinfo
+  - cat $HOME/an/etc/astrometry.cfg
+  - ls $HOME/an/data
 
 script:
   - "nosetests -v -s --with-coverage --cover-erase --cover-xml --cover-inclusive --cover-package=pyadn"
