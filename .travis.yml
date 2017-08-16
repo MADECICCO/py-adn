@@ -30,8 +30,10 @@ install:
   # --
   - conda env export
   - /bin/bash build_astrometry.sh
-  - ls $HOME/an
+  - ls $HOME/an/bin
   - export PATH="$PATH:$HOME/an/bin"
+  - which solve-field
+  - which wcsinfo
 
 script:
   - "nosetests -v -s --with-coverage --cover-erase --cover-xml --cover-inclusive --cover-package=pyadn"
