@@ -31,6 +31,7 @@ install:
   - conda env export
   - /bin/bash build_astrometry.sh
   - ls $HOME/an
+  - export PATH="$PATH:~/an/bin"
 
 script:
   - "nosetests -v -s --with-coverage --cover-erase --cover-xml --cover-inclusive --cover-package=pyadn"
