@@ -5,18 +5,19 @@ then
     echo "Found cached dir"
     exit 0
 fi
+
 which python
 python --version
 which python2
 mkdir -p ~/bin
 export PATH=~/bin:${PATH}
-ls -l $(which python$PY)
-ln -s $(which python$PY) ~/bin/python
+ls -l $(which python)
+ln -s $(which python) ~/bin/python
 which python
 python --version
 which pip2
-ls -l $(which pip$PY)
-ln -s $(which pip$PY) ~/bin/pip
+ls -l $(which pip)
+ln -s $(which pip) ~/bin/pip
 which pip
 pip install numpy --user
 pip install fitsio --user

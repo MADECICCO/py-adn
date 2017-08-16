@@ -1,0 +1,7 @@
+dependencies:
+- nose
+- numpy
+- pandas
+- matplotlib
+- astropy
+- pyfits

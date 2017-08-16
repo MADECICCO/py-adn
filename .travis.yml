@@ -2,19 +2,39 @@ sudo: false
 
 dist: trusty
 
-language: c
-compiler:
-  - gcc
-env:
-  - PY=2
+language: python
+python:
+  - "2.7"
+#language: c
+#compiler:
+#  - gcc
+#env:
+#  - PY=2
 
 cache:
   directories:
   - $HOME/an
 
-script:
+install:
+  - wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  # Useful for debugging any issues with conda
+  - conda info -a
+  - conda env create -q -n test-environment -f environment.yml
+  - source activate test-environment
+  - pip install codecov
+  # --
+  - conda env export
   - /bin/bash build_astrometry.sh
   - ls $HOME/an
+
+script:
+  - "nosetests -v -s --with-coverage --cover-erase --cover-xml --cover-inclusive --cover-package=pyadn"
+
 addons:
   apt:
     packages:
