@@ -35,6 +35,7 @@ install:
   - export PYTHONPATH=${PYTHONPATH}:~/an/lib/python
   - which solve-field
   - which wcsinfo
+  - wget http://broiler.astrometry.net/~dstn/4100/index-4115.fits ${HOME}/an/data/
   - cat $HOME/an/etc/astrometry.cfg
   - ls $HOME/an/data
 
