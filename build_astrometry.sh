@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -d "$HOME/an" ]
+if [ -d "$HOME/an/bin" ]
 then
     echo "Found cached dir"
     exit 0
