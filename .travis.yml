@@ -32,6 +32,7 @@ install:
   - /bin/bash build_astrometry.sh
   - ls $HOME/an/bin
   - export PATH="$PATH:$HOME/an/bin"
+  - export PYTHONPATH=${PYTHONPATH}:~/an/lib/python
   - which solve-field
   - which wcsinfo
 
