@@ -35,12 +35,15 @@ install:
   - export PYTHONPATH=${PYTHONPATH}:~/an/lib/python
   - which solve-field
   - which wcsinfo
-  - wget http://broiler.astrometry.net/~dstn/4100/index-4115.fits -O ${HOME}/an/data/index-4115.fits
+#  - wget http://broiler.astrometry.net/~dstn/4100/index-4115.fits -O ${HOME}/an/data/index-4115.fits
   - cat $HOME/an/etc/astrometry.cfg
   - ls $HOME/an/data
 
 script:
   - "nosetests -v -s --with-coverage --cover-erase --cover-xml --cover-inclusive --cover-package=pyadn"
+
+after_success:
+  - codecov
 
 addons:
   apt:
