@@ -9,7 +9,7 @@ from astropy.io import fits
 import time
 
 logger = logging.getLogger(__name__)
-#logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 import astrometry
 from astrometry.util.fits import streaming_text_table
 
@@ -17,7 +17,7 @@ SOLVE_FIELD = 'solve-field'
 WCSINFO = 'wcsinfo'
 
 
-def solve_xy(xcoords, ycoords, work_dir=None):
+def solve_xy(xcoords, ycoords, work_dir=None, astrometry_path='', code_tolerance=0.01, pixel_error=1):
     if work_dir is None:
         work_dir = tempfile.mkdtemp(suffix='pyadn_work')
     logger.debug("working in %s" % work_dir)
@@ -33,10 +33,16 @@ def solve_xy(xcoords, ycoords, work_dir=None):
                                intvalmap=dict(null=-1))
     fits_xy = os.path.join(work_dir, 'xy.fits')
     stt.write_to(fits_xy)
+    if astrometry_path:
+        solve_field = os.path.join(astrometry_path,SOLVE_FIELD)
+    else:
+        solve_field = SOLVE_FIELD
 
-    command = [SOLVE_FIELD,
+    command = [solve_field,
                fits_xy,
                '-l', '10',  # give up after this many seconds
+               '-c', ('%f' % code_tolerance),
+               '-E', ('%f' % pixel_error),
                '-w', '3232',
                '-e', '4864',
                '--no-plot']
@@ -51,10 +57,14 @@ def solve_xy(xcoords, ycoords, work_dir=None):
     logger.debug("Solve result:\n" + solve_result)
     with open(os.path.join(work_dir,'solve.log'),'w') as fh:
         fh.write(solve_result)
-    return get_wcs_info(os.path.join(work_dir,'xy.wcs'))
+    return get_wcs_info(os.path.join(work_dir,'xy.wcs'),astrometry_path=astrometry_path)
 
-def get_wcs_info(wcs_file):
-    wcs_info_string = subprocess.check_output([WCSINFO, wcs_file])
+def get_wcs_info(wcs_file, astrometry_path=''):
+    if astrometry_path:
+        wcsinfo = os.path.join(astrometry_path,WCSINFO)
+    else:
+        wcsinfo = WCSINFO
+    wcs_info_string = subprocess.check_output([wcsinfo, wcs_file])
     result = {}
     for line in wcs_info_string.splitlines():
         k,v = line.split()
